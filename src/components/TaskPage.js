@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TaskList from './TaskList';
-
-const TASK_STATUSES = ['Unstarted', 'In Progress', 'Completed'];
+import { TASK_STATUSES } from "../constants";
 
 class TaskPage extends Component {
 
@@ -31,6 +30,9 @@ class TaskPage extends Component {
         });
         this.resetForm();
     };
+    handleEditStatus = (id, status) => {
+        this.props.onChangeStatus({id, status});
+    };
 
     resetForm = () => {
         this.setState({
@@ -44,7 +46,7 @@ class TaskPage extends Component {
         const { tasks } = this.props;
         return TASK_STATUSES.map(status => {
             const statusTask = tasks.filter(task => task.status === status);
-            return <TaskList key={status} status={status} tasks={statusTask} />;
+            return <TaskList key={status} status={status} tasks={statusTask} onChangeStatus={this.handleEditStatus} />;
         });
     }
 

@@ -7,7 +7,7 @@ const TaskList = props => (
             <strong>{props.status}</strong>
         </div>
         {props.tasks.map(task => (
-            <Task key={task.id} task={task} />
+            <Task key={task.id} task={task} onChangeStatus={ e => props.onChangeStatus(task.id, e.target.value)} />
         ))}
     </div>
 );
