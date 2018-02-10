@@ -22,17 +22,16 @@ export default function tasks(state = {tasks: mockTasks}, action){
         case CREATE_TASK:
             return { tasks: [...state.tasks, {id, title, description, status}] };
         case EDIT_STATUS:
-            const tasks = state.tasks.filter(task => task.id !== id);
-            const index = state.tasks.findIndex(task => task.id === id);
-            const task = state.tasks[index];
             return {
-                tasks: [
-                    ...tasks,
-                    {
-                        ...task,
-                        status
+                tasks: state.tasks.map(task => {
+                    if(task.id === id){
+                        return {
+                            ...task,
+                            status
+                        }
                     }
-                ]
+                    return task;
+                })
             };
         default:
             return state;
