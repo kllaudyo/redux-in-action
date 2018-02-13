@@ -1,5 +1,5 @@
 import { uniqueId } from "../actions";
-import { CREATE_TASK, EDIT_STATUS } from "../constants";
+import { CREATE_TASK, EDIT_STATUS, FETCH_TASKS_SUCCEEDED } from "../constants";
 
 const mockTasks = [
     {
@@ -16,8 +16,8 @@ const mockTasks = [
     },
 ];
 
-export default function tasks(state = {tasks: mockTasks}, action){
-    const {id, title, description, status} = action;
+export default function tasks(state = {tasks: []}, action){
+    const {id, title, description, status, tasks=[]} = action;
     switch(action.type){
         case CREATE_TASK:
             return { tasks: [...state.tasks, {id, title, description, status}] };
@@ -32,6 +32,10 @@ export default function tasks(state = {tasks: mockTasks}, action){
                     }
                     return task;
                 })
+            };
+        case FETCH_TASKS_SUCCEEDED:
+            return {
+                tasks
             };
         default:
             return state;
