@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import './index.css';
 import tasks from './reducers';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(tasks, devToolsEnhancer());
+const store = createStore(tasks, composeWithDevTools(applyMiddleware(thunk)));
 
 if(module.hot){
     module.hot.accept('./App', ()=> {
