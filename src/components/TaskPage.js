@@ -30,8 +30,8 @@ class TaskPage extends Component {
         });
         this.resetForm();
     };
-    handleEditStatus = (id, status) => {
-        this.props.onChangeStatus({id, status});
+    handleEditStatus = (task, status) => {
+        this.props.onChangeStatus({...task, status});
     };
 
     resetForm = () => {
