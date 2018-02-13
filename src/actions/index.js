@@ -1,4 +1,4 @@
-import { CREATE_TASK_SUCCEEDED, EDIT_STATUS_SUCCEEDED, FETCH_TASKS_SUCCEEDED, TASK_UNSTARTED } from "../constants";
+import { CREATE_TASK_SUCCEEDED, EDIT_STATUS_SUCCEEDED, FETCH_TASKS_SUCCEEDED, FETCH_TASKS_STARTED, TASK_UNSTARTED } from "../constants";
 import * as api from '../api';
 
 export const createTaskSucceeded = ({id, title, description, status}) => ({
@@ -30,6 +30,17 @@ export const fetchTaskSucceeded = tasks => ({
     tasks
 });
 
-export const fetchTasks = () => dispatch =>
+export const fetchTaskStarted = () => ({
+    type:FETCH_TASKS_STARTED,
+});
+
+export const fetchTasks = () => dispatch => {
+    dispatch(fetchTaskStarted());
     api.fetchTasks()
-        .then(res => dispatch(fetchTaskSucceeded(res.data)));
+        .then(res =>
+            setTimeout(
+                () => dispatch(fetchTaskSucceeded(res.data))
+                , 2000
+            )
+        );
+};

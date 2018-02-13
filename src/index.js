@@ -5,11 +5,19 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import './index.css';
-import tasks from './reducers';
+import tasksReducer from './reducers';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(tasks, composeWithDevTools(applyMiddleware(thunk)));
+const rootReducer = (state={}, action) => {
+    const tasks =tasksReducer(state.tasks, action);
+    return {tasks};
+};
+
+const store = createStore(
+    tasksReducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
 if(module.hot){
     module.hot.accept('./App', ()=> {
