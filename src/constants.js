@@ -1,5 +1,8 @@
 export const
-    TASK_STATUSES = ['Unstarted', 'In Progress', 'Completed'],
+    TASK_UNSTARTED = 'Unstarted',
+    TASK_IN_PROGRESS = 'In Progress',
+    TASK_COMPLETED = 'Completed',
+    TASK_STATUSES = [TASK_UNSTARTED, TASK_IN_PROGRESS, TASK_COMPLETED],
     CREATE_TASK = 'CREATE_TASK',
     EDIT_STATUS = 'EDIT_STATUS',
     FETCH_TASKS_SUCCEEDED = 'FETCH_TASKS_SUCCEEDED'

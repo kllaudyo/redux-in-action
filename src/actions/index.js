@@ -1,4 +1,4 @@
-import { CREATE_TASK, EDIT_STATUS, FETCH_TASKS_SUCCEEDED } from "../constants";
+import { CREATE_TASK, EDIT_STATUS, FETCH_TASKS_SUCCEEDED, TASK_UNSTARTED } from "../constants";
 import * as api from '../api';
 
 let _id = 1;
@@ -8,7 +8,7 @@ export const createTask = ({title, description}) => ({
     id:uniqueId(),
     title,
     description,
-    status:'Unstarted'
+    status: TASK_UNSTARTED
 });
 
 export const editStatus = ({id, status}) => ({
