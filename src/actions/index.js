@@ -1,5 +1,5 @@
 import { CREATE_TASK, EDIT_STATUS, FETCH_TASKS_SUCCEEDED } from "../constants";
-import axios from 'axios';
+import * as api from '../api';
 
 let _id = 1;
 export const uniqueId = () => _id++;
@@ -23,7 +23,5 @@ export const fetchTaskSucceeded = tasks => ({
 });
 
 export const fetchTasks = () => dispatch =>
-    axios.get('http://localhost:3001/tasks')
-        .then(res => {
-            dispatch(fetchTaskSucceeded(res.data))
-        });
+    api.fetchTasks()
+        .then(res => dispatch(fetchTaskSucceeded(res.data)));
