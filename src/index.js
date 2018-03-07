@@ -6,17 +6,18 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import './index.css';
 import tasksReducer from './reducers';
+import logger from './middleware/logger';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const rootReducer = (state={}, action) => {
-    const tasks =tasksReducer(state.tasks, action);
-    return {tasks};
-};
+// const rootReducer = (state={}, action) => {
+//     const tasks =tasksReducer(state.tasks, action);
+//     return {tasks};
+// };
 
 const store = createStore(
     tasksReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
 if(module.hot){
