@@ -1,16 +1,23 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:3001';
-const client = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-const makeCall = endpoint =>
-    client.get(endpoint)
+const makeCall = ({endpoint, method='GET', body}) => {
+    const url = `${API_BASE_URL}${endpoint}`;
+    const params = {
+        method,
+        url,
+        data: body,
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+
+    return axios(params)
         .then(response => response)
         .catch(err => err);
+
+};
+
 
 export const CALL_API = 'CALL_API';
 
@@ -19,13 +26,16 @@ const apiMiddleware = store => next => action => {
     if(typeof callApi === 'undefined')
         return next(action);
 
+    const { endpoint, method, body} = callApi;
     const [requestStartedType, successType, failureType] = callApi.types;
     next({type: requestStartedType});
 
     //todo(1) para realmente tornar generico usar o payload
-    makeCall(callApi.endpoint)
-        .then(response =>
-            next({type: successType, data: [...response.data]})
+    makeCall({endpoint, method, body})
+        .then(response => {
+                console.log(response);
+                return next({type: successType, data: response.data})
+            }
         )
         .catch(err =>
             next({type: failureType, error: err.message})
